@@ -50,9 +50,9 @@ class WebsocketManager(threading.Thread):
         self.ws = websocket.WebSocketApp(ws_url, on_message=self.on_message, on_open=self.on_open)
         self.ping_sender = threading.Thread(target=self.send_ping)
 
-    def run(self):
+    def run(self, reconnect: int=1):
         self.ping_sender.start()
-        self.ws.run_forever()
+        self.ws.run_forever(reconnect=1)
 
     def send_ping(self):
         while True:
